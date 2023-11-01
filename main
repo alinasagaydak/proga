@@ -1,0 +1,67 @@
+//все в квадрат
+#pragma once
+#include <utility>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cmath>
+
+template<typename T>
+T Sqr(const T& );
+
+template<typename T, typename K>
+std::pair<T, K> Sqr(const std::pair<T, K>&);
+
+template<typename K, typename T>
+std::map<K, T> Sqr(const std::map<K, T>&);
+
+template<typename T>
+std::vector<T> Sqr(const std::vector<T>&);
+
+
+
+template<typename T>
+T Sqr(const T& a) {
+    return a * a;
+}
+
+template<typename T>
+std::vector<T> Sqr(const std::vector<T>& vec) {
+    std::vector<T> sqr_vec(vec.size());
+    for (size_t i = 0; i < vec.size(); ++i) {
+        sqr_vec[i] = Sqr(vec[i]);
+    }
+    return sqr_vec;
+}
+
+template<typename T, typename K>
+std::pair<T, K> Sqr(const std::pair<T, K>& para) {
+    std::pair<T, K> sqr_para = std::make_pair(Sqr(para.first), Sqr(para.second));
+    return sqr_para;
+}
+
+template<typename K, typename T>
+std::map<K, T> Sqr(const std::map<K, T>& dict) {
+    std::map<K, T> sqr_map = dict;
+    for (auto const& [key, val] : dict) {
+        sqr_map[key] = Sqr(val);
+    }
+    return sqr_map;
+}
+
+
+
+//часть множества
+#pragma once
+
+#include <vector>
+#include <set>
+
+template <typename T>
+std::vector<T> FindGreaterElement(const std::set<T>& elements, const T& threshold) {
+    auto upper_bound = elements.upper_bound(threshold);
+    if (upper_bound != elements.end()) {
+        return std::vector<T>(upper_bound, elements.end());
+    }
+    return std::vector<T>();
+}
